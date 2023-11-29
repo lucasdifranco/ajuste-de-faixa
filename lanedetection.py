@@ -1,13 +1,12 @@
 import numpy as np
 import cv2 as cv
-from matplotlib import pyplot as plt
-
+from color_selections import color_selection as cs
 class detlane():
 
     def __init__(self) -> None:
 
-        self.image_path = "./image/teste.jpg"
-        self.kernel = 5
+        self.image_path = "./image/img1.jpg"
+        self.kernel = 7
         self.detlane()
 
         pass
@@ -20,9 +19,14 @@ class detlane():
 
         src_img = cv.imread(self.image_path)
 
+        #rgb = cs.RGB_selection(src_img)
+
         canny = self.canny_img(src_img) # changes the image to grayscale and uses canny to get the edges in the picture
 
         region_img = self.region(canny)
+
+        cv.imshow('test',region_img)
+        cv.waitKey(0)
 
         lines = self.HoghLines(region_img) # get all lines possible
         right, left = self.average_lines(lines) # average of all lines
@@ -70,8 +74,8 @@ class detlane():
 
         img_pol = np.array([
                        [(-150, height),
-                        (width // 5, height // 5),
-                        (3 * width // 4, height // 5),
+                        (width // 5, height // 3),
+                        (3 * width // 4, height // 3),
                         (width + 150, height)]
                        ])
         
